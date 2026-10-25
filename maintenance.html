@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Maintenance - Mining Equipment &amp; Tyre Maintenance</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-key="maintenance" data-title="Maintenance">
+<div class="app">
+  <aside class="sidebar" id="sidebar"></aside>
+  <div class="content">
+    <header class="topbar" id="topbar"></header>
+    <main class="main">
+      <div class="top">
+        <div>
+          <h1>Maintenance</h1>
+          <p class="sub">Preventive maintenance schedule and work orders for the fleet.</p>
+        </div>
+      </div>
+      <section class="mini-stats">
+        <div class="card mini"><div class="label">Open work orders</div><div class="num">5</div></div>
+        <div class="card mini"><div class="label">In progress</div><div class="num c-blue">2</div></div>
+        <div class="card mini"><div class="label">Overdue</div><div class="num c-red">1</div></div>
+        <div class="card mini"><div class="label">Completed (30 days)</div><div class="num c-green">3</div></div>
+      </section>
+      <div class="tools">
+        <input id="search" type="text" placeholder="Search by work order, equipment or technician...">
+        <select id="filter"><option value="">All status</option><option>Scheduled</option><option>In Progress</option><option>Overdue</option><option>Completed</option></select>
+      </div>
+      <section class="card">
+        <div class="card-head"><div><h2>Work Orders</h2><p class="sub">Preventive maintenance tasks and repairs</p></div></div>
+        <div class="table-box">
+          <table>
+            <tr><th>Work Order</th><th>Equipment</th><th>Task</th><th>Priority</th><th>Assigned To</th><th>Due Date</th><th>Status</th></tr>
+            <tr data-status="Scheduled"><td class="id">WO-1048</td><td>EQ-EX-012 · CAT 6060 Excavator</td><td>Engine maintenance</td><td>High</td><td>A. Ndlovu</td><td>26 Oct 2026</td><td><span class="tag t-orange">Scheduled</span></td></tr>
+            <tr data-status="In Progress"><td class="id">WO-1047</td><td>EQ-DT-031 · Komatsu 930E Truck</td><td>Tyre rotation</td><td>High</td><td>M. Peterson</td><td>26 Oct 2026</td><td><span class="tag t-blue">In Progress</span></td></tr>
+            <tr data-status="In Progress"><td class="id">WO-1046</td><td>EQ-HT-023 · CAT 797F Haul Truck</td><td>Tyre pressure correction</td><td>High</td><td>S. Williams</td><td>26 Oct 2026</td><td><span class="tag t-blue">In Progress</span></td></tr>
+            <tr data-status="Scheduled"><td class="id">WO-1045</td><td>EQ-DR-004 · Epiroc Pit Viper 351</td><td>Drill calibration</td><td>Medium</td><td>T. Mokoena</td><td>29 Oct 2026</td><td><span class="tag t-orange">Scheduled</span></td></tr>
+            <tr data-status="Overdue"><td class="id">WO-1044</td><td>EQ-WT-002 · CAT 777G Water Truck</td><td>Breakdown repair</td><td>High</td><td>L. Chen</td><td>24 Oct 2026</td><td><span class="tag t-red">Overdue</span></td></tr>
+            <tr data-status="Completed"><td class="id">WO-1043</td><td>EQ-EX-012 · CAT 6060 Excavator</td><td>Preventive service</td><td>Medium</td><td>A. Ndlovu</td><td>30 Sep 2026</td><td><span class="tag t-green">Completed</span></td></tr>
+            <tr data-status="Completed"><td class="id">WO-1042</td><td>EQ-LD-008 · CAT 994K Loader</td><td>Hydraulic inspection</td><td>Medium</td><td>S. Williams</td><td>29 Sep 2026</td><td><span class="tag t-green">Completed</span></td></tr>
+            <tr data-status="Completed"><td class="id">WO-1041</td><td>EQ-GR-017 · Komatsu GD655 Grader</td><td>Brake inspection</td><td>Low</td><td>L. Chen</td><td>28 Sep 2026</td><td><span class="tag t-green">Completed</span></td></tr>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+</div>
+<script src="app.js"></script>
+<script>
+// search and status filter
+var search = document.getElementById("search"), filter = document.getElementById("filter");
+function apply() {
+  var t = search.value.toLowerCase(), s = filter.value;
+  document.querySelectorAll("tr[data-status]").forEach(function (r) {
+    r.style.display = (r.textContent.toLowerCase().indexOf(t) !== -1 && (!s || r.dataset.status === s)) ? "" : "none";
+  });
+}
+search.addEventListener("input", apply); filter.addEventListener("change", apply);
+</script>
+</body>
+</html>

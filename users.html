@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Users - Mining Equipment &amp; Tyre Maintenance</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-key="users" data-title="Users">
+<div class="app">
+  <aside class="sidebar" id="sidebar"></aside>
+  <div class="content">
+    <header class="topbar" id="topbar"></header>
+    <main class="main">
+      <div class="top">
+        <div>
+          <h1>Users</h1>
+          <p class="sub">Manage who can use the platform and what each role can open.</p>
+        </div>
+      </div>
+      <div class="tools">
+        <input id="search" type="text" placeholder="Search by name, email or role...">
+        <select id="filter"><option value="">All status</option><option>Active</option><option>Inactive</option></select>
+        <button class="btn-sm btn-amber" id="addBtn">+ Add user</button>
+      </div>
+
+      <div class="form-row hidden" id="addForm">
+        <div><label for="nName">Name</label><input id="nName" type="text" placeholder="Full name"></div>
+        <div><label for="nEmail">Email</label><input id="nEmail" type="email" placeholder="name@company.com"></div>
+        <div><label for="nRole">Role</label><select id="nRole"><option>Admin</option><option>Maintenance Manager</option><option selected>Technician</option><option>Operator</option></select></div>
+        <div><label for="nSite">Site</label><select id="nSite"><option>North Ridge Mine</option></select></div>
+        <button class="btn-sm btn-amber" id="saveUser">Save user</button>
+      </div>
+
+      <section class="card">
+        <div class="card-head"><div><h2>Users</h2><p class="sub">People who can sign in to the platform and their roles</p></div></div>
+        <div class="table-box">
+          <table id="userTable">
+            <tr><th>Name</th><th>Email</th><th>Role</th><th>Site</th><th>Status</th></tr>
+            <tr data-status="Active"><td class="id">Priya Nair</td><td>priya@northridge.com</td><td>Maintenance Manager</td><td>North Ridge Mine</td><td><span class="tag t-green">Active</span></td></tr>
+            <tr data-status="Active"><td class="id">James Mitchell</td><td>james.mitchell@company.com</td><td>Admin</td><td>North Ridge Mine</td><td><span class="tag t-green">Active</span></td></tr>
+            <tr data-status="Active"><td class="id">A. Ndlovu</td><td>a.ndlovu@northridge.com</td><td>Technician</td><td>North Ridge Mine</td><td><span class="tag t-green">Active</span></td></tr>
+            <tr data-status="Active"><td class="id">M. Peterson</td><td>m.peterson@northridge.com</td><td>Technician</td><td>North Ridge Mine</td><td><span class="tag t-green">Active</span></td></tr>
+            <tr data-status="Active"><td class="id">S. Williams</td><td>s.williams@northridge.com</td><td>Technician</td><td>North Ridge Mine</td><td><span class="tag t-green">Active</span></td></tr>
+            <tr data-status="Active"><td class="id">T. Mokoena</td><td>t.mokoena@northridge.com</td><td>Operator</td><td>North Ridge Mine</td><td><span class="tag t-green">Active</span></td></tr>
+            <tr data-status="Inactive"><td class="id">L. Chen</td><td>l.chen@northridge.com</td><td>Operator</td><td>North Ridge Mine</td><td><span class="tag t-gray">Inactive</span></td></tr>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+</div>
+<script src="app.js"></script>
+<script>
+// users: search, filter and add a user (kept in this page only - sample data)
+var search = document.getElementById("search"), filter = document.getElementById("filter");
+function apply() {
+  var t = search.value.toLowerCase(), s = filter.value;
+  document.querySelectorAll("#userTable tr[data-status]").forEach(function (r) {
+    r.style.display = (r.textContent.toLowerCase().indexOf(t) !== -1 && (!s || r.dataset.status === s)) ? "" : "none";
+  });
+}
+search.addEventListener("input", apply); filter.addEventListener("change", apply);
+
+function esc(s) { return s.replace(/&/g, "&amp;").replace(/</g, "&lt;").replace(/>/g, "&gt;"); }
+document.getElementById("addBtn").addEventListener("click", function () {
+  document.getElementById("addForm").classList.toggle("hidden");
+});
+document.getElementById("saveUser").addEventListener("click", function () {
+  var n = document.getElementById("nName").value.trim(), e = document.getElementById("nEmail").value.trim();
+  if (!n || !e) { MT.toast("Please enter the name and email."); return; }
+  var tr = document.createElement("tr");
+  tr.dataset.status = "Active";
+  tr.innerHTML = '<td class="id">' + esc(n) + '</td><td>' + esc(e) + '</td><td>' + esc(document.getElementById("nRole").value) +
+                 '</td><td>' + esc(document.getElementById("nSite").value) + '</td><td><span class="tag t-green">Active</span></td>';
+  document.getElementById("userTable").appendChild(tr);
+  document.getElementById("nName").value = ""; document.getElementById("nEmail").value = "";
+  document.getElementById("addForm").classList.add("hidden");
+  MT.toast("User added.");
+});
+</script>
+</body>
+</html>

@@ -6,6 +6,10 @@ A web prototype (HTML, CSS and JavaScript) for managing mining equipment and tyr
 - `login.html` – sign in with email, password and role
 - `dashboard.html` – operations dashboard (summary cards, tyre health, alerts, recent maintenance)
 - `tyres-equipment.html` – equipment list and tyre tracking with search and filters
+- `maintenance.html` – work orders with search and status filter
+- `alerts.html` – alerts by severity, with "Mark resolved"
+- `reports.html` – tyre life, downtime and cost reports with a period filter
+- `users.html` – user list with roles and an "Add user" form (Admin only)
 
 ## Roles
 Admin, Maintenance Manager, Technician and Operator. Each role sees only the menu pages it is allowed to open.
@@ -15,4 +19,4 @@ Download all files, keep them in one folder and open `login.html` in a browser.
 Prototype login: any email and password are accepted. Data shown is sample data.
 
 ## Files
-`index.html`, `login.html`, `dashboard.html`, `tyres-equipment.html`, `style.css`, `app.js`
+`index.html`, `login.html`, `dashboard.html`, `tyres-equipment.html`, `maintenance.html`, `alerts.html`, `reports.html`, `users.html`, `style.css`, `app.js`

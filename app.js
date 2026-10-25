@@ -30,13 +30,13 @@
 
   // menu links and which roles may see them
   var NAV = [
-    { key: "dashboard",   label: "Dashboard",       href: "dashboard.html",               icon: "grid",  roles: [A, M, T, O] },
+    { key: "dashboard",   label: "Dashboard",       href: "dashboard.html",                 icon: "grid",  roles: [A, M, T, O] },
     { key: "equipment",   label: "Equipment",       href: "tyres-equipment.html#equipment", icon: "truck", roles: [A, M, T, O] },
     { key: "tyres",       label: "Tyre Management", href: "tyres-equipment.html#tyres",     icon: "tyre",  roles: [A, M, T] },
-    { key: "maintenance", label: "Maintenance",     soon: true, icon: "tool",  roles: [A, M, T] },
-    { key: "alerts",      label: "Alerts",          soon: true, icon: "alert", roles: [A, M, T], badge: 3 },
-    { key: "reports",     label: "Reports",         soon: true, icon: "chart", roles: [A, M] },
-    { key: "users",       label: "Users",           soon: true, icon: "users", roles: [A] },
+    { key: "maintenance", label: "Maintenance",     href: "maintenance.html",               icon: "tool",  roles: [A, M, T] },
+    { key: "alerts",      label: "Alerts",          href: "alerts.html",                    icon: "alert", roles: [A, M, T], badge: 3 },
+    { key: "reports",     label: "Reports",         href: "reports.html",                   icon: "chart", roles: [A, M] },
+    { key: "users",       label: "Users",           href: "users.html",                     icon: "users", roles: [A] },
     { key: "settings",    label: "Settings",        soon: true, icon: "gear",  roles: [A] }
   ];
 
@@ -46,6 +46,16 @@
   if (!user) {
     if (storageOk) { location.replace("login.html"); return; }
     user = { name: "James Mitchell", role: M };   // only if the browser blocks storage
+  }
+
+
+  // ---- role guard (report section 4.8): no permission -> redirect to an allowed page ----
+  var pageKey = document.body.getAttribute("data-key");
+  for (var g = 0; g < NAV.length; g++) {
+    if (NAV[g].key === pageKey && NAV[g].roles.indexOf(user.role) === -1) {
+      location.replace((user.role === T || user.role === O) ? "tyres-equipment.html" : "dashboard.html");
+      return;
+    }
   }
 
   function initials(n) {

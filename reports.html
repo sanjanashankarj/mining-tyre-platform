@@ -1,0 +1,90 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Reports - Mining Equipment &amp; Tyre Maintenance</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-key="reports" data-title="Reports">
+<div class="app">
+  <aside class="sidebar" id="sidebar"></aside>
+  <div class="content">
+    <header class="topbar" id="topbar"></header>
+    <main class="main">
+      <div class="top">
+        <div>
+          <h1>Reports</h1>
+          <p class="sub">Tyre life, maintenance completion, downtime and cost summaries.</p>
+        </div>
+      </div>
+      <div class="tools">
+        <select id="period"><option value="7">Last 7 days</option><option value="30" selected>Last 30 days</option><option value="90">Last 90 days</option></select>
+        <select id="site"><option>North Ridge Mine</option><option>All sites</option></select>
+      </div>
+
+      <section class="mini-stats">
+        <div class="card mini"><div class="label">Maintenance completion</div><div class="num c-green" id="k1">92%</div></div>
+        <div class="card mini"><div class="label">Downtime (hours)</div><div class="num c-orange" id="k2">64</div></div>
+        <div class="card mini"><div class="label">Average tyre life</div><div class="num" id="k3">68%</div></div>
+        <div class="card mini"><div class="label">Maintenance cost</div><div class="num" id="k4">$42,300</div></div>
+      </section>
+
+      <section class="grid2">
+        <div class="card">
+          <div class="card-head"><div><h2>Tyre Life Remaining</h2><p class="sub">Average tread life by equipment</p></div></div>
+          <div id="chartLife"></div>
+        </div>
+        <div class="card">
+          <div class="card-head"><div><h2>Downtime by Equipment</h2><p class="sub">Hours out of service</p></div></div>
+          <div id="chartDown"></div>
+        </div>
+      </section>
+
+      <section class="card">
+        <div class="card-head"><div><h2>Cost Summary</h2><p class="sub">Maintenance cost by category</p></div></div>
+        <div class="table-box">
+          <table id="costTable"></table>
+        </div>
+      </section>
+    </main>
+  </div>
+</div>
+<script src="app.js"></script>
+<script>
+// sample report data for each period
+var DATA = {
+  7:  { k: ["95%", "14", "69%", "$9,800"],
+        life: [["Komatsu 930E", 35], ["CAT 797F", 48], ["CAT 6060", 55], ["CAT 994K", 82], ["Komatsu GD655", 70]],
+        down: [["CAT 777G", 9], ["Komatsu 930E", 3], ["CAT 797F", 2], ["CAT 6060", 0], ["CAT 994K", 0]],
+        cost: [["Tyres", "$4,200"], ["Preventive service", "$3,100"], ["Repairs", "$2,500"]] },
+  30: { k: ["92%", "64", "68%", "$42,300"],
+        life: [["Komatsu 930E", 35], ["CAT 797F", 48], ["CAT 6060", 55], ["CAT 994K", 82], ["Komatsu GD655", 70]],
+        down: [["CAT 777G", 28], ["Komatsu 930E", 14], ["CAT 797F", 12], ["CAT 6060", 7], ["CAT 994K", 3]],
+        cost: [["Tyres", "$18,900"], ["Preventive service", "$13,400"], ["Repairs", "$10,000"]] },
+  90: { k: ["89%", "181", "66%", "$128,600"],
+        life: [["Komatsu 930E", 38], ["CAT 797F", 51], ["CAT 6060", 58], ["CAT 994K", 80], ["Komatsu GD655", 72]],
+        down: [["CAT 777G", 74], ["Komatsu 930E", 41], ["CAT 797F", 36], ["CAT 6060", 20], ["CAT 994K", 10]],
+        cost: [["Tyres", "$57,200"], ["Preventive service", "$40,100"], ["Repairs", "$31,300"]] }
+};
+function bars(id, rows, unit, colour, max) {
+  document.getElementById(id).innerHTML = rows.map(function (r) {
+    var c = typeof colour === "function" ? colour(r[1]) : colour;
+    return '<div class="hbar"><span>' + r[0] + '</span><div class="track"><i style="width:' + Math.min(100, r[1] / max * 100) + '%;background:' + c + '"></i></div><b>' + r[1] + unit + '</b></div>';
+  }).join("");
+}
+function draw() {
+  var d = DATA[document.getElementById("period").value];
+  ["k1","k2","k3","k4"].forEach(function (id, i) { document.getElementById(id).textContent = d.k[i]; });
+  bars("chartLife", d.life, "%", function (v) { return v < 40 ? "#D64545" : v < 60 ? "#D98A1A" : "#2A9D6F"; }, 100);
+  bars("chartDown", d.down, " h", "#D98A1A", Math.max.apply(null, d.down.map(function (r) { return r[1]; })) || 1);
+  document.getElementById("costTable").innerHTML = "<tr><th>Category</th><th>Cost</th></tr>" +
+    d.cost.map(function (r) { return "<tr><td>" + r[0] + "</td><td>" + r[1] + "</td></tr>"; }).join("");
+}
+document.getElementById("period").addEventListener("change", draw);
+document.getElementById("site").addEventListener("change", function () { MT.toast("Sample data is shown for all sites."); });
+draw();
+</script>
+</body>
+</html>

@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Alerts - Mining Equipment &amp; Tyre Maintenance</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-key="alerts" data-title="Alerts">
+<div class="app">
+  <aside class="sidebar" id="sidebar"></aside>
+  <div class="content">
+    <header class="topbar" id="topbar"></header>
+    <main class="main">
+      <div class="top">
+        <div>
+          <h1>Alerts</h1>
+          <p class="sub">Alerts for abnormal readings and overdue tasks, shown in order of severity.</p>
+        </div>
+      </div>
+      <section class="mini-stats">
+        <div class="card mini"><div class="label">Critical</div><div class="num c-red" id="cCrit">3</div></div>
+        <div class="card mini"><div class="label">Warning</div><div class="num c-orange" id="cWarn">2</div></div>
+        <div class="card mini"><div class="label">Information</div><div class="num c-blue" id="cInfo">1</div></div>
+        <div class="card mini"><div class="label">Resolved today</div><div class="num c-green" id="cDone">0</div></div>
+      </section>
+      <div class="tools">
+        <select id="filter"><option value="">All severity</option><option>Critical</option><option>Warning</option><option>Information</option></select>
+      </div>
+      <section class="card">
+        <div class="card-head"><div><h2>Alerts</h2><p class="sub">Ordered by severity. Select "Mark resolved" when the problem is fixed.</p></div></div>
+        <div id="alertList">
+          <div class="alert" data-sev="Critical"><div class="icon bg-red" data-icon="gauge"></div><div style="flex:1"><b>Tyre pressure below recommended level</b><small>EQ-HT-023 · Front right · 88 PSI (limit 95)</small></div><span class="tag t-red">Critical</span><div class="time" style="margin-left:14px">8 min ago</div><button class="btn-sm resolve" style="margin-left:14px">Mark resolved</button></div>
+          <div class="alert" data-sev="Critical"><div class="icon bg-red" data-icon="tool"></div><div style="flex:1"><b>Engine maintenance due</b><small>EQ-EX-012 · Due in 6 hrs</small></div><span class="tag t-red">Critical</span><div class="time" style="margin-left:14px">34 min ago</div><button class="btn-sm resolve" style="margin-left:14px">Mark resolved</button></div>
+          <div class="alert" data-sev="Critical"><div class="icon bg-red" data-icon="thermo"></div><div style="flex:1"><b>High tyre temperature detected</b><small>EQ-DT-031 · Rear axle · 96 °C (limit 85)</small></div><span class="tag t-red">Critical</span><div class="time" style="margin-left:14px">1 hr ago</div><button class="btn-sm resolve" style="margin-left:14px">Mark resolved</button></div>
+          <div class="alert" data-sev="Warning"><div class="icon bg-orange" data-icon="gauge"></div><div style="flex:1"><b>Tread life below 45%</b><small>EQ-DT-031 · Rear left · 42% remaining</small></div><span class="tag t-orange">Warning</span><div class="time" style="margin-left:14px">3 hrs ago</div><button class="btn-sm resolve" style="margin-left:14px">Mark resolved</button></div>
+          <div class="alert" data-sev="Warning"><div class="icon bg-orange" data-icon="thermo"></div><div style="flex:1"><b>Tyre temperature rising</b><small>EQ-EX-012 · Front left · 78 °C</small></div><span class="tag t-orange">Warning</span><div class="time" style="margin-left:14px">5 hrs ago</div><button class="btn-sm resolve" style="margin-left:14px">Mark resolved</button></div>
+          <div class="alert" data-sev="Information"><div class="icon bg-blue" data-icon="info"></div><div style="flex:1"><b>Drill calibration scheduled</b><small>EQ-DR-004 · 29 Oct 2026</small></div><span class="tag t-blue">Information</span><div class="time" style="margin-left:14px">Yesterday</div><button class="btn-sm resolve" style="margin-left:14px">Mark resolved</button></div>
+        </div>
+        <div class="empty hidden" id="none">No unresolved alerts. All clear.</div>
+      </section>
+    </main>
+  </div>
+</div>
+<script src="app.js"></script>
+<script>
+// alerts: filter by severity, mark as resolved, update counts and the sidebar badge
+var list = document.getElementById("alertList");
+var filter = document.getElementById("filter");
+var done = 0;
+function counts() {
+  var c = { Critical: 0, Warning: 0, Information: 0 };
+  list.querySelectorAll(".alert").forEach(function (a) { c[a.dataset.sev]++; });
+  document.getElementById("cCrit").textContent = c.Critical;
+  document.getElementById("cWarn").textContent = c.Warning;
+  document.getElementById("cInfo").textContent = c.Information;
+  document.getElementById("cDone").textContent = done;
+  var badge = document.querySelector(".menu a[data-key=alerts] .badge");
+  if (badge) { badge.textContent = c.Critical; badge.style.display = c.Critical ? "" : "none"; }
+  document.getElementById("none").classList.toggle("hidden", list.children.length > 0);
+}
+list.addEventListener("click", function (e) {
+  if (!e.target.classList.contains("resolve")) return;
+  e.target.closest(".alert").remove();
+  done++; counts(); MT.toast("Alert marked as resolved.");
+});
+filter.addEventListener("change", function () {
+  list.querySelectorAll(".alert").forEach(function (a) { a.style.display = (!filter.value || a.dataset.sev === filter.value) ? "" : "none"; });
+});
+counts();
+</script>
+</body>
+</html>

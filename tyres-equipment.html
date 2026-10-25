@@ -1,0 +1,143 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Equipment &amp; Tyre Management - Mining Equipment &amp; Tyre Maintenance</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-key="equipment" data-title="Equipment">
+<div class="app">
+  <aside class="sidebar" id="sidebar"></aside>
+
+  <div class="content">
+    <header class="topbar" id="topbar"></header>
+
+    <main class="main">
+      <div class="top">
+        <div>
+          <h1 id="pageTitle">Equipment</h1>
+          <p class="sub" id="pageSub">Track every machine at North Ridge Mine.</p>
+        </div>
+      </div>
+
+      <div class="tabs">
+        <button class="tab active" data-tab="equipment">Equipment</button>
+        <button class="tab" data-tab="tyres" id="tyreTab">Tyre Tracking</button>
+      </div>
+
+      <div class="tools">
+        <input id="search" type="text" placeholder="Search by ID or name...">
+        <select id="filter"></select>
+      </div>
+
+      <!-- Equipment table -->
+      <section class="card" id="equipment">
+        <div class="card-head"><div><h2>Equipment List</h2><p class="sub">All machines at North Ridge Mine</p></div></div>
+        <div class="table-box">
+          <table>
+            <tr><th>Equipment ID</th><th>Name</th><th>Type</th><th>Operating Hours</th><th>Next Service</th><th>Status</th></tr>
+            <tr data-status="Active"><td class="id">EQ-EX-012</td><td>CAT 6060 Excavator</td><td>Excavator</td><td>6,420 hrs</td><td>In 6 hrs</td><td><span class="tag t-orange">Service Due</span></td></tr>
+            <tr data-status="Active"><td class="id">EQ-DT-031</td><td>Komatsu 930E Truck</td><td>Dump Truck</td><td>9,180 hrs</td><td>12 Nov 2026</td><td><span class="tag t-red">Tyre Alert</span></td></tr>
+            <tr data-status="Active"><td class="id">EQ-HT-023</td><td>CAT 797F Haul Truck</td><td>Haul Truck</td><td>7,950 hrs</td><td>05 Nov 2026</td><td><span class="tag t-red">Tyre Alert</span></td></tr>
+            <tr data-status="Active"><td class="id">EQ-LD-008</td><td>CAT 994K Loader</td><td>Loader</td><td>5,310 hrs</td><td>20 Nov 2026</td><td><span class="tag t-green">Active</span></td></tr>
+            <tr data-status="Active"><td class="id">EQ-DR-004</td><td>Epiroc Pit Viper 351</td><td>Drill</td><td>3,870 hrs</td><td>25 Oct 2026</td><td><span class="tag t-green">Active</span></td></tr>
+            <tr data-status="Active"><td class="id">EQ-GR-017</td><td>Komatsu GD655 Grader</td><td>Grader</td><td>4,260 hrs</td><td>18 Nov 2026</td><td><span class="tag t-green">Active</span></td></tr>
+            <tr data-status="Idle"><td class="id">EQ-BD-009</td><td>CAT D10T Bulldozer</td><td>Bulldozer</td><td>8,040 hrs</td><td>30 Nov 2026</td><td><span class="tag t-gray">Idle</span></td></tr>
+            <tr data-status="Breakdown"><td class="id">EQ-WT-002</td><td>CAT 777G Water Truck</td><td>Water Truck</td><td>6,700 hrs</td><td>Repair needed</td><td><span class="tag t-red">Breakdown</span></td></tr>
+          </table>
+        </div>
+      </section>
+
+      <!-- Tyre tracking table -->
+      <section class="card hidden" id="tyres">
+        <div class="card-head"><div><h2>Tyre Tracking</h2><p class="sub">Pressure, temperature and wear of each tyre</p></div></div>
+        <div class="table-box">
+          <table>
+            <tr><th>Tyre ID</th><th>Equipment</th><th>Position</th><th>Pressure (PSI)</th><th>Temp (°C)</th><th>Tread Life</th><th>Health</th></tr>
+            <tr data-status="Critical"><td class="id">TY-023-FR</td><td>EQ-HT-023</td><td>Front right</td><td>88 (low)</td><td>74</td><td><span class="bar"><i style="width:48%;background:#D98A1A"></i></span>48%</td><td><span class="tag t-red">Critical</span></td></tr>
+            <tr data-status="Critical"><td class="id">TY-031-RR</td><td>EQ-DT-031</td><td>Rear right</td><td>102</td><td>96 (high)</td><td><span class="bar"><i style="width:35%;background:#D64545"></i></span>35%</td><td><span class="tag t-red">Critical</span></td></tr>
+            <tr data-status="Warning"><td class="id">TY-031-RL</td><td>EQ-DT-031</td><td>Rear left</td><td>100</td><td>84</td><td><span class="bar"><i style="width:42%;background:#D98A1A"></i></span>42%</td><td><span class="tag t-orange">Warning</span></td></tr>
+            <tr data-status="Warning"><td class="id">TY-012-FL</td><td>EQ-EX-012</td><td>Front left</td><td>94</td><td>78</td><td><span class="bar"><i style="width:55%;background:#D98A1A"></i></span>55%</td><td><span class="tag t-orange">Warning</span></td></tr>
+            <tr data-status="Healthy"><td class="id">TY-008-FL</td><td>EQ-LD-008</td><td>Front left</td><td>105</td><td>62</td><td><span class="bar"><i style="width:82%;background:#2A9D6F"></i></span>82%</td><td><span class="tag t-green">Healthy</span></td></tr>
+            <tr data-status="Healthy"><td class="id">TY-008-FR</td><td>EQ-LD-008</td><td>Front right</td><td>104</td><td>63</td><td><span class="bar"><i style="width:80%;background:#2A9D6F"></i></span>80%</td><td><span class="tag t-green">Healthy</span></td></tr>
+            <tr data-status="Healthy"><td class="id">TY-017-RL</td><td>EQ-GR-017</td><td>Rear left</td><td>98</td><td>60</td><td><span class="bar"><i style="width:70%;background:#2A9D6F"></i></span>70%</td><td><span class="tag t-green">Healthy</span></td></tr>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+</div>
+
+<script src="app.js"></script>
+<script>
+// Tabs, search and filter
+var canSeeTyres = MT.user.role !== "Operator";   // Operators only see Equipment (report section 4.8)
+var filters = {
+  equipment: ["All status", "Active", "Idle", "Breakdown"],
+  tyres: ["All health", "Healthy", "Warning", "Critical"]
+};
+var titles = {
+  equipment: ["Equipment", "Track every machine at North Ridge Mine."],
+  tyres: ["Tyre Management", "Track the health of every tyre: pressure, temperature and wear."]
+};
+var current = "equipment";
+var search = document.getElementById("search");
+var filter = document.getElementById("filter");
+
+if (!canSeeTyres) document.getElementById("tyreTab").classList.add("hidden");
+
+function fillFilter() {
+  filter.innerHTML = "";
+  filters[current].forEach(function (name, i) {
+    var o = document.createElement("option");
+    o.value = i === 0 ? "" : name;
+    o.textContent = name;
+    filter.appendChild(o);
+  });
+}
+
+function apply() {
+  var text = search.value.toLowerCase();
+  var status = filter.value;
+  document.querySelectorAll("#" + current + " tr[data-status]").forEach(function (row) {
+    var matchText = row.textContent.toLowerCase().indexOf(text) !== -1;
+    var matchStatus = !status || row.dataset.status === status;
+    row.style.display = matchText && matchStatus ? "" : "none";
+  });
+}
+
+function show(tab) {
+  if (tab === "tyres" && !canSeeTyres) tab = "equipment";
+  current = tab;
+  document.querySelectorAll(".tab").forEach(function (b) { b.classList.toggle("active", b.dataset.tab === tab); });
+  document.getElementById("equipment").classList.toggle("hidden", tab !== "equipment");
+  document.getElementById("tyres").classList.toggle("hidden", tab !== "tyres");
+  document.getElementById("pageTitle").textContent = titles[tab][0];
+  document.getElementById("pageSub").textContent = titles[tab][1];
+  var crumb = document.querySelector(".crumb b");
+  if (crumb) crumb.textContent = titles[tab][0];
+  MT.setActive(tab);
+  search.value = "";
+  fillFilter();
+  apply();
+}
+
+function tabFromHash() { return location.hash === "#tyres" ? "tyres" : "equipment"; }
+
+document.querySelectorAll(".tab").forEach(function (btn) {
+  btn.addEventListener("click", function () { location.hash = "#" + btn.dataset.tab; });
+});
+window.addEventListener("hashchange", function () { show(tabFromHash()); });
+search.addEventListener("input", apply);
+filter.addEventListener("change", apply);
+
+show(tabFromHash());
+
+// search sent from the top bar (?q=...)
+var q = new URLSearchParams(location.search).get("q");
+if (q) { search.value = q; apply(); }
+</script>
+</body>
+</html>

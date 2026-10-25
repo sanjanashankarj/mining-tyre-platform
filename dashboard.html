@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Dashboard - Mining Equipment &amp; Tyre Maintenance</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body data-key="dashboard" data-title="Dashboard">
+<div class="app">
+  <aside class="sidebar" id="sidebar"></aside>
+
+  <div class="content">
+    <header class="topbar" id="topbar"></header>
+
+    <main class="main">
+      <div class="top">
+        <div>
+          <h1>Operations Dashboard</h1>
+          <p class="sub">Fleet health, maintenance priorities and tyre performance at a glance.</p>
+        </div>
+        <div class="live">Live · Updated 09:42 <span data-icon="refresh"></span></div>
+      </div>
+
+      <!-- Summary cards -->
+      <section class="stats">
+        <div class="card stat"><div class="head"><div class="label">Total Equipment</div><span class="ico bg-blue" data-icon="truck"></span></div><div class="row"><div class="num">48</div><div class="note c-blue">Across 4 sites</div></div></div>
+        <div class="card stat"><div class="head"><div class="label">Active Equipment</div><span class="ico bg-green" data-icon="pulse"></span></div><div class="row"><div class="num">39</div><div class="note c-green">81.3% utilization</div></div></div>
+        <div class="card stat"><div class="head"><div class="label">Under Maintenance</div><span class="ico bg-orange" data-icon="tool"></span></div><div class="row"><div class="num">6</div><div class="note c-orange">2 due today</div></div></div>
+        <div class="card stat"><div class="head"><div class="label">Critical Alerts</div><span class="ico bg-red" data-icon="alert"></span></div><div class="row"><div class="num">3</div><div class="note c-red">Requires action</div></div></div>
+        <div class="card stat"><div class="head"><div class="label">Total Tyres</div><span class="ico bg-dark" data-icon="tyre"></span></div><div class="row"><div class="num">192</div><div class="note">176 in service</div></div></div>
+        <div class="card stat"><div class="head"><div class="label">Tyres Requiring Attention</div><span class="ico bg-orange" data-icon="gauge"></span></div><div class="row"><div class="num">12</div><div class="note c-orange">6.3% of fleet</div></div></div>
+      </section>
+
+      <!-- Charts and alerts -->
+      <section class="grid3">
+        <div class="card">
+          <div class="card-head"><div><h2>Equipment Status</h2><p class="sub">Live fleet availability</p></div><a href="tyres-equipment.html#equipment">View fleet ↗</a></div>
+          <div class="chart-wrap">
+            <div class="donut" style="background: conic-gradient(#2A9D6F 0 81%, #D98A1A 81% 94%, #8b95a5 94% 98%, #D64545 98% 100%);"><div><span><b>48</b><small>EQUIPMENT</small></span></div></div>
+            <div class="legend">
+              <div class="l"><span><i style="background:#2A9D6F"></i>Active</span><b>39</b><span class="pct">81%</span></div>
+              <div class="l"><span><i style="background:#D98A1A"></i>Maintenance</span><b>6</b><span class="pct">13%</span></div>
+              <div class="l"><span><i style="background:#8b95a5"></i>Idle</span><b>2</b><span class="pct">4%</span></div>
+              <div class="l"><span><i style="background:#D64545"></i>Breakdown</span><b>1</b><span class="pct">2%</span></div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><div><h2>Tyre Health Overview</h2><p class="sub">Real-time pressure &amp; temperature</p></div><a href="tyres-equipment.html#tyres">View tyres ↗</a></div>
+          <div class="chart-wrap">
+            <div class="donut" style="background: conic-gradient(#2A9D6F 0 93.7%, #D98A1A 93.7% 98.4%, #D64545 98.4% 100%);"><div><span><b>192</b><small>TYRES</small></span></div></div>
+            <div class="legend">
+              <div class="l"><span><i style="background:#2A9D6F"></i>Healthy</span><b>180</b><span class="pct">93.7%</span></div>
+              <div class="l"><span><i style="background:#D98A1A"></i>Warning</span><b>9</b><span class="pct">4.7%</span></div>
+              <div class="l"><span><i style="background:#D64545"></i>Critical</span><b>3</b><span class="pct">1.6%</span></div>
+              <div class="info"><span data-icon="info"></span>12 tyres require attention</div>
+            </div>
+          </div>
+        </div>
+
+        <div class="card">
+          <div class="card-head"><div><h2>Critical Alerts</h2><p class="sub">3 unresolved alerts</p></div><a href="#" data-soon="1">View all ↗</a></div>
+          <div class="alert"><div class="icon bg-red" data-icon="gauge"></div><div><b>Tyre pressure below recommended level</b><small>EQ-HT-023 · Front right</small></div><div class="time">8 min ago</div></div>
+          <div class="alert"><div class="icon bg-orange" data-icon="tool"></div><div><b>Engine maintenance due</b><small>EQ-EX-012 · Due in 6 hrs</small></div><div class="time">34 min ago</div></div>
+          <div class="alert"><div class="icon bg-red" data-icon="thermo"></div><div><b>High tyre temperature detected</b><small>EQ-DT-031 · Rear axle</small></div><div class="time">1 hr ago</div></div>
+        </div>
+      </section>
+
+      <!-- Recent maintenance -->
+      <section class="card">
+        <div class="card-head"><div><h2>Recent Maintenance Activities</h2><p class="sub">Latest service work across the fleet</p></div><a href="#" data-soon="1">View maintenance ↗</a></div>
+        <div class="table-box">
+          <table>
+            <tr><th>Equipment ID</th><th>Equipment Name</th><th>Maintenance Type</th><th>Date</th><th>Technician</th><th>Status</th></tr>
+            <tr><td class="id">EQ-EX-012</td><td>CAT 6060 Excavator</td><td>Preventive service</td><td>30 Sep 2026</td><td>A. Ndlovu</td><td><span class="tag t-green">Completed</span></td></tr>
+            <tr><td class="id">EQ-DT-031</td><td>Komatsu 930E Truck</td><td>Tyre rotation</td><td>30 Sep 2026</td><td>M. Peterson</td><td><span class="tag t-blue">In Progress</span></td></tr>
+            <tr><td class="id">EQ-LD-008</td><td>CAT 994K Loader</td><td>Hydraulic inspection</td><td>29 Sep 2026</td><td>S. Williams</td><td><span class="tag t-green">Completed</span></td></tr>
+            <tr><td class="id">EQ-DR-004</td><td>Epiroc Pit Viper 351</td><td>Drill calibration</td><td>29 Sep 2026</td><td>T. Mokoena</td><td><span class="tag t-orange">Scheduled</span></td></tr>
+            <tr><td class="id">EQ-GR-017</td><td>Komatsu GD655 Grader</td><td>Brake inspection</td><td>28 Sep 2026</td><td>L. Chen</td><td><span class="tag t-green">Completed</span></td></tr>
+          </table>
+        </div>
+      </section>
+    </main>
+  </div>
+</div>
+<script src="app.js"></script>
+</body>
+</html>

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Sign in - Mining Equipment &amp; Tyre Maintenance</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+<div class="login-page">
+
+  <!-- Left: brand panel -->
+  <section class="login-left">
+    <div class="login-brand">
+      <div class="logo-mark">
+        <svg class="i" viewBox="0 0 24 24"><path d="M4 20L14 10"/><path d="M5 8c4-4 11-4 15 2"/><path d="M12 12l6-6"/></svg>
+      </div>
+      <div class="brand-text"><b>Mining Equipment</b><small>&amp; Tyre Maintenance</small></div>
+    </div>
+
+    <div>
+      <h1>Keep every machine and tyre on track.</h1>
+      <p>Monitor equipment health, schedule maintenance and respond to tyre alerts from one place.</p>
+      <div class="login-stats">
+        <div><b>48</b><small>Equipment</small></div>
+        <div><b>192</b><small>Tyres</small></div>
+        <div><b>4</b><small>Sites</small></div>
+      </div>
+    </div>
+
+    <div class="login-foot">Easwari Engineering College · Project prototype</div>
+  </section>
+
+  <!-- Right: sign-in card -->
+  <section class="login-right">
+    <div>
+      <form class="login-card" id="loginForm" novalidate>
+        <h2>Welcome back</h2>
+        <p class="sub">Sign in to your account to continue.</p>
+
+        <label for="email">Email address</label>
+        <input id="email" type="email" placeholder="name@company.com" autocomplete="username">
+
+        <label for="password">Password</label>
+        <div class="pw">
+          <input id="password" type="password" placeholder="••••••••••" autocomplete="current-password">
+          <button type="button" id="toggle">Show</button>
+        </div>
+
+        <label for="role">Role</label>
+        <select id="role">
+          <option>Admin</option>
+          <option selected>Maintenance Manager</option>
+          <option>Technician</option>
+          <option>Operator</option>
+        </select>
+
+        <div class="remember">
+          <label><input type="checkbox" id="remember"> Remember me</label>
+          <a href="#" id="forgot">Forgot password?</a>
+        </div>
+
+        <div class="error" id="error" role="alert"></div>
+        <button class="btn" type="submit">Sign in</button>
+      </form>
+      <div class="site-line">Site: North Ridge Mine</div>
+    </div>
+  </section>
+
+</div>
+
+<script>
+// show / hide password
+document.getElementById("toggle").addEventListener("click", function () {
+  var p = document.getElementById("password");
+  var hidden = p.type === "password";
+  p.type = hidden ? "text" : "password";
+  this.textContent = hidden ? "Hide" : "Show";
+});
+
+document.getElementById("forgot").addEventListener("click", function (e) {
+  e.preventDefault();
+  document.getElementById("error").style.color = "#7a8494";
+  document.getElementById("error").textContent = "Password reset is not available in this prototype.";
+});
+
+// Prototype login: any email and password are accepted (as described in the report).
+// After login: Admin / Maintenance Manager -> dashboard, Technician / Operator -> equipment page.
+document.getElementById("loginForm").addEventListener("submit", function (e) {
+  e.preventDefault();
+  var err = document.getElementById("error");
+  err.style.color = "";
+  var email = document.getElementById("email").value.trim();
+  var pass = document.getElementById("password").value;
+  var role = document.getElementById("role").value;
+
+  if (!email || !pass) {
+    err.textContent = "Please enter your email address and password.";
+    return;
+  }
+  var name = email.split("@")[0].replace(/[._]+/g, " ").replace(/\b\w/g, function (c) { return c.toUpperCase(); });
+  try {
+    sessionStorage.setItem("mt_user", JSON.stringify({ name: name, role: role, email: email, site: "North Ridge Mine" }));
+  } catch (x) {}
+  window.location.href = (role === "Operator" || role === "Technician") ? "tyres-equipment.html" : "dashboard.html";
+});
+</script>
+</body>
+</html>
